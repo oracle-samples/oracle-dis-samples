@@ -1,0 +1,96 @@
+{
+  "templates": [
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "9ba8bca5-f441-46df-8786-4cadf63b59f9",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Fusion Apps BIP to ADW Incremental Load Template (Customer Managed)",
+      "identifier": "FUSION_APPS_BIP_TO_ADW_INCREMENTAL_LOAD_TEMPLATE__CUSTOMER_MANAGED_",
+      "description": "Application that allows Fusion Apps BI Publisher reports to run extracts based on and report the last execution in a metadata table stored in an Autonomous Data Warehouse target schema."
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "3073012f-d003-4fb0-8b0b-327356beb2f6",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Oracle Vision Image Template",
+      "identifier": "ORACLE_VISION_TEMPLATE",
+      "description": "Application with REST tasks for performing OCI Vision Image Analysis. The tasks include image classification, image object detection, and image text detection. "
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "07763762-4ed8-4051-bfa3-06d96be31607",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Oracle Vision Document Template",
+      "identifier": "ORACLE_VISION_DOCUMENT_TEMPLATE",
+      "description": "Application with REST tasks for performing OCI Vision Document AI. The tasks include document classification, document key value detection, document language classification, document table detection, and document text detection. "
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "65466b18-4970-40fb-92d7-6b84d291eb56",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Oracle Object Store Management Template",
+      "identifier": "ORACLE_OBJECT_STORE_MANAGEMENT_TEMPLATE",
+      "description": "Application with REST tasks for Object Storage to copy, delete, and rename objects and to create and delete buckets "
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "dbe05075-411c-4b02-a1e8-a090e3e24ee3",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Oracle DataSafe Masking Template",
+      "identifier": "ORACLE_DATASAFE_MASKING_TEMPLATE",
+      "description": "Application with parameterized tasks to generate a Data Safe sensitive model and masking from a target Oracle database schema."
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "e545fb6b-0af9-4e8b-85c3-991073c5d7a7",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Oracle DB to ADW Incremental Load Template (Customer Managed)",
+      "identifier": "ORACLE_DB_TO_ADW_INCREMENTAL_LOAD_TEMPLATE",
+      "description": "Application that allows incremental tasks to run based on and report the last execution in a metadata table stored in an Autonomous Data Warehouse target schema."
+    },
+    {
+      "definedTags": {},
+      "freeformTags": {},
+      "sourceApplicationInfo": {
+        "applicationKey": "ec80f0ff-e410-4509-a7a5-3fdef39ed67a",
+        "copyType": "DISCONNECTED"
+      },
+      "modelType": "INTEGRATION_APPLICATION",
+      "compartmentId": "ocid1.compartment.oc1..aaaaaaaaoi3mtutwao7sjpa3n5ikf3ddjpm5gocarquawsyjwyykmktajfda",
+      "name": "Load Files from Oracle Object Store into ADW",
+      "identifier": "LOAD_FILES_FROM_ORACLE_OBJECT_STORE_INTO_ADW",
+      "description": "Application with tasks to load different file types from OCI Object Storage into Autonomous Data Warehouse: JSON, Parquet, CSV, Avro."
+    }
+  ]
+}
+
