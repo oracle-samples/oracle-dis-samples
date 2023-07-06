@@ -1,4 +1,4 @@
-# terraform-oci-data-integration-services-arch
+# Terraform OCI Data Integration Services Architecture
 
 ## Reference Architecture
 
@@ -14,8 +14,8 @@ This Terraform code creates a workspace in a defined VCN subnet, and applied all
 - 
 If you don't have the required permissions and quota, contact your tenancy administrator. See [Policy Reference](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Reference/policyreference.htm), [Service Limits](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/servicelimits.htm), [Compartment Quotas](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcequotas.htm).
 
-
-## Deploy Using the Terraform CLI
+## Installation 
+### Deploy Using the Terraform CLI
 
 ### Clone the Module
 
@@ -57,14 +57,18 @@ workspace_project_folder_identifier = "<Folder Identifier>" # Ex: REFERENCE_PROJ
 workspace_project_folder_name = "<Folder Name>" # 
 workspace_project_folder_description = "<Folder Description>" 
 
+```
+## How to run it?
+
 ### Create the Resources
+
 Run the following commands:
 
     terraform init
     terraform plan
     terraform apply
 
-### Destroy the Deployment
+### Removing the environment
 When you no longer need the deployment, you can run this command to destroy the resources:
 
     terraform destroy
@@ -72,7 +76,15 @@ When you no longer need the deployment, you can run this command to destroy the 
 ### Testing your Deployment
 After the deployment, you can access the Data Integration Workspace for the OCI Console.
 
-````
+## Documentation (OCI Data Integration Services) 
+For how-to-use OCI-DI and features:
+https://docs.oracle.com/en-us/iaas/data-integration/home.htm
+
+### OCI-DI APIs
+https://docs.oracle.com/en-us/iaas/api/#/en/data-integration/20200430/
+
+### OCI-DI Templates
+https://blogs.oracle.com/dataintegration/post/oci-data-integration-service-templates
 
 ## Attribution & Credits
 
