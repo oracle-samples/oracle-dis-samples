@@ -2,7 +2,7 @@
 
 ## Reference Architecture
 
-This Terraform code creates a workspace in a defined VCN subnet, applied all the necessary policies for the execution against the data assets for OCI Object Store and Oracle ADW. The terraform application also uploads all the DIS Templates task, making the woerkspace readly available to be used.
+This Terraform code creates a workspace in a defined VCN subnet, and applied all the necessary policies for the execution against the data assets for OCI Object Store and Oracle ADW. The Terraform application also uploads all the DIS Templates tasks, making the workspace readily available.
 ## Architecture Diagram 
 
 ![](./images/DIS-Reference-Architecture.png)
@@ -70,12 +70,12 @@ When you no longer need the deployment, you can run this command to destroy the 
     terraform destroy
 
 ### Testing your Deployment
-After the deployment is finished, you can access the Data Integration Workspace for the OCI Console.
+After the deployment, you can access the Data Integration Workspace for the OCI Console.
 
 ````
 
 ## Contributing
-This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open source community.
+This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open-source community.
 
 ## Attribution & Credits
 
