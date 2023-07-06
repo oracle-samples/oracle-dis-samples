@@ -22,7 +22,7 @@ If you don't have the required permissions and quota, contact your tenancy admin
 Now, you'll want a local copy of this repo. You can make that with the commands:
 
 ```
-    git clone https://github.com/oracle-devrel/terraform-oci-dataintegration-arch.git
+    git clone https://github.com/oracle-devrel/oracle-dis-samples.git
     cd terraform-oci-dataintegration-arch
     ls
 ```
