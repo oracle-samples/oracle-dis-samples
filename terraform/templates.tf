@@ -25,7 +25,7 @@ resource "null_resource" "load_templates" {
 
     provisioner "local-exec" {
     command = <<EOT
-python3 scripts/createTemplates.py ${oci_dataintegration_workspace.dis_workspace.id} ${var.compartment_ocid} ${var.region}
+python3 scripts/createTemplate.py ${oci_dataintegration_workspace.dis_workspace.id} ${var.compartment_ocid} ${var.region}
 EOT
     working_dir = "${path.module}"
     interpreter = [
