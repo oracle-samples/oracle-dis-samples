@@ -34,7 +34,7 @@ resource "oci_identity_policy" "DISObjectStorageManageAccessPolicy" {
   compartment_id = var.tenancy_ocid
   statements     = ["Allow any-user to use buckets in compartment id ${var.compartment_ocid}  where ALL {request.principal.type = 'disworkspace', request.principal.id = ${oci_dataintegration_workspace.dis_workspace.id}}",
   "Allow any-user to manage objects in compartment id ${var.compartment_ocid}  where ALL {request.principal.type = 'disworkspace', request.principal.id = ${oci_dataintegration_workspace.dis_workspace.id}}",
-  "Allow any-user to manage buckets in compartment id ${var.compartment_ocid}  where ALL {request.principal.type = 'disworkspace', , request.principal.id = ${oci_dataintegration_workspace.dis_workspace.id}, request.permission = 'PAR_MANAGE'}"]
+  "Allow any-user to manage buckets in compartment id ${var.compartment_ocid}  where ALL {request.principal.type = 'disworkspace', request.principal.id = ${oci_dataintegration_workspace.dis_workspace.id}, request.permission = 'PAR_MANAGE'}"]
 
   provisioner "local-exec" {
     command = "sleep 5"
@@ -79,7 +79,7 @@ resource "oci_identity_policy" "DIS_Templates" {
   name           = "DISTemplate"
   description    = "OCI Services Policy for DIS Templates"
   compartment_id = var.tenancy_ocid
-  statements     = ["allow any-user to manage object-store-family in tenancy where ALL {request.principal.type = 'disapplication'}",
+  statements     = ["allow any-user to manage object-store-family in tenancy where ALL {request.principal.type = 'disworkspace'}",
   "allow dynamic-group DISDynamicGroup to use ai-service-vision-family in tenancy",
   "allow dynamic-group DISDynamicGroup to use virtual-network-family in tenancy" ,
   "allow dynamic-group DISDynamicGroup to manage data-safe-discovery-family in tenancy",
