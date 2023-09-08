@@ -38,4 +38,11 @@ The columns should be tab separated and include;
 * ENABLED - True or False to enable the task schedule
 * TASK - task name that resides in the application that is passed to script
 
+## Author
+David Allan - Consultant Principal Architect 
+
+david.allan@oracle.com
+
+
+
 
