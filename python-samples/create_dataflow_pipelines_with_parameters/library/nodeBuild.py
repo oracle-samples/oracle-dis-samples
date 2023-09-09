@@ -16,8 +16,6 @@ from oci.data_integration.models.name_pattern_rule import NamePatternRule
 from oci.data_integration.models.output_link import OutputLink
 from oci.data_integration.models.output_port import OutputPort
 from oci.data_integration.models.proxy_field import ProxyField
-from oci.data_integration.models.shape_field import ShapeField
-from oci.data_integration.models.unique_key import UniqueKey
 from oci.data_integration.models.dynamic_proxy_field import DynamicProxyField
 from oci.data_integration.models.read_operation_config import ReadOperationConfig
 from oci.data_integration.models.rule_type_config import RuleTypeConfig
@@ -41,33 +39,40 @@ from oci.data_integration.models.oracle_adwc_write_attributes import OracleAdwcW
 
 import uuid
 
+
 def get_uuid():
     return str(uuid.uuid4())
 
-idCache={}
+
+idCache = {}
+
+
 def getUuid(reference):
     theUUID = idCache.get(reference)
     if (theUUID is None):
-      uuid = get_uuid()
-      idCache[reference]= uuid
-      return uuid
+        uuid = get_uuid()
+        idCache[reference] = uuid
+        return uuid
     return theUUID
 
 
 class FromObject:
-  def __init__(self,node,link):
-    self.node = node
-    self.link = link
+    def __init__(self, node, link):
+        self.node = node
+        self.link = link
+
 
 class ToObject:
-  def __init__(self,node,link):
-    self.node = node
-    self.link = link
+    def __init__(self, node, link):
+        self.node = node
+        self.link = link
+
 
 class OperatorProperty:
-  def __init__(self,name,value):
-    self.value = value
-    self.name = name
+    def __init__(self, name, value):
+        self.value = value
+        self.name = name
+
 
 """
 
@@ -75,8 +80,8 @@ This helper creates Source and Target nodes and standard links/ports for these o
 The operator type is specified when the node is created.
 Inputs / Outputs
 Nodes have inputs and outputs, each operator type
-Source has 0 inputs and one output. 
-The pattern for the input/output names is INPUTn/OUTPUTm 
+Source has 0 inputs and one output.
+The pattern for the input/output names is INPUTn/OUTPUTm
 """
 
 
@@ -95,42 +100,56 @@ class Node:
         self.modelType = ""
 
     def dataAsset(self, dataAssetType, dataAssetKey):
-        self.operatorProperties.append(OperatorProperty("dataAsset", dataAssetKey))
-        self.operatorProperties.append(OperatorProperty("dataAssetType", dataAssetType))
+        self.operatorProperties.append(
+            OperatorProperty("dataAsset", dataAssetKey))
+        self.operatorProperties.append(
+            OperatorProperty("dataAssetType", dataAssetType))
 
     def dataAssetParam(self, dataAssetType, dataAssetKey, parameterRef):
-        self.operatorProperties.append(OperatorProperty("dataAsset", dataAssetKey))
-        self.operatorProperties.append(OperatorProperty("dataAssetType", dataAssetType))
-        self.operatorProperties.append(OperatorProperty("dataAssetReference", parameterRef))
+        self.operatorProperties.append(
+            OperatorProperty("dataAsset", dataAssetKey))
+        self.operatorProperties.append(
+            OperatorProperty("dataAssetType", dataAssetType))
+        self.operatorProperties.append(
+            OperatorProperty("dataAssetReference", parameterRef))
 
     def connection(self, connectionType, connectionKey):
-        self.operatorProperties.append(OperatorProperty("connection", connectionKey))
-        self.operatorProperties.append(OperatorProperty("connectionType", connectionType))
+        self.operatorProperties.append(
+            OperatorProperty("connection", connectionKey))
+        self.operatorProperties.append(
+            OperatorProperty("connectionType", connectionType))
 
     def connectionParam(self, connectionType, connectionKey, parameterRef):
-        self.operatorProperties.append(OperatorProperty("connection", connectionKey))
-        self.operatorProperties.append(OperatorProperty("connectionType", connectionType))
-        self.operatorProperties.append(OperatorProperty("connectionReference", parameterRef))
+        self.operatorProperties.append(
+            OperatorProperty("connection", connectionKey))
+        self.operatorProperties.append(
+            OperatorProperty("connectionType", connectionType))
+        self.operatorProperties.append(
+            OperatorProperty("connectionReference", parameterRef))
 
     def schema(self, schema):
         self.operatorProperties.append(OperatorProperty("schema", schema))
 
     def schemaParam(self, schema, parameterRef):
         self.operatorProperties.append(OperatorProperty("schema", schema))
-        self.operatorProperties.append(OperatorProperty("schemaReference", parameterRef))
+        self.operatorProperties.append(
+            OperatorProperty("schemaReference", parameterRef))
 
     def entity(self, entityType, entityKey):
         self.operatorProperties.append(OperatorProperty("entity", entityKey))
-        self.operatorProperties.append(OperatorProperty("entityType", entityType))
+        self.operatorProperties.append(
+            OperatorProperty("entityType", entityType))
 
     def entityParam(self, entityType, entityKey, parameterRef):
         self.operatorProperties.append(OperatorProperty("entity", entityKey))
-        self.operatorProperties.append(OperatorProperty("entityType", entityType))
-        self.operatorProperties.append(OperatorProperty("entityReference", parameterRef))
-
+        self.operatorProperties.append(
+            OperatorProperty("entityType", entityType))
+        self.operatorProperties.append(
+            OperatorProperty("entityReference", parameterRef))
 
     def parameterRef(self, parameterName, parameterRef):
-        self.operatorProperties.append(OperatorProperty(parameterName + "Reference", parameterRef))
+        self.operatorProperties.append(OperatorProperty(
+            parameterName + "Reference", parameterRef))
 
     def parameterValue(self, parameterBuild):
         self.operatorProperties.append(
@@ -153,7 +172,6 @@ class Node:
 
     def build(self):
         key = get_uuid()
-        modelType = "FLOW_NODE"
         outflds = []
         primarySource = None
         if (self.type == "Minus" or self.type == "Union" or self.type == "Intersect"):
@@ -166,31 +184,38 @@ class Node:
                 scope = self.getScope(i + 1)
 
                 rules = []
-                rules = self.getProjectionRules(self.selectionRules.get("INPUT" + str(i + 1)))
-                rule_type_config = RuleTypeConfig(scope=scope, projection_rules=rules)
+                rules = self.getProjectionRules(
+                    self.selectionRules.get("INPUT" + str(i + 1)))
+                rule_type_config = RuleTypeConfig(
+                    scope=scope, projection_rules=rules)
                 dynamic_type = DynamicType(type_handler=rule_type_config)
                 if (len(rules) > 0):
-                    outfld = DynamicProxyField(key=fldkeyi, name="FIELD" + str(i + 1), type=dynamic_type)
+                    outfld = DynamicProxyField(
+                        key=fldkeyi, name="FIELD" + str(i + 1), type=dynamic_type)
                     outflds.append(outfld)
                 else:
-                    outfld = ProxyField(key=fldkeyi, name="FIELD1", scope=scope)
+                    outfld = ProxyField(
+                        key=fldkeyi, name="FIELD1", scope=scope)
                     outflds.append(outfld)
 
         else:
             scope = self.getScope(1)
             fldkey = getUuid(self.identifier + ".OUTPUT1.FIELD1")
             rules = []
-            rules = self.getProjectionRules(self.projectionRules.get("OUTPUT1"))
+            rules = self.getProjectionRules(
+                self.projectionRules.get("OUTPUT1"))
 
-            rule_type_config = RuleTypeConfig(scope=scope, projection_rules=rules)
+            rule_type_config = RuleTypeConfig(
+                scope=scope, projection_rules=rules)
             dynamic_type = DynamicType(type_handler=rule_type_config)
             if (len(rules) > 0):
-                outfld = DynamicProxyField(key=fldkey, name="FIELD1", type=dynamic_type)
+                outfld = DynamicProxyField(
+                    key=fldkey, name="FIELD1", type=dynamic_type)
                 outflds.append(outfld)
             else:
                 outfld = ProxyField(key=fldkey, name="FIELD1", scope=scope)
                 outflds.append(outfld)
-        if (self.type == "Projection" ):
+        if (self.type == "Projection"):
             for j in self._expressions:
                 outflds.append(j)
         outputf_port = OutputPort(key=getUuid(self.identifier + ".OP1"),
@@ -207,16 +232,19 @@ class Node:
         inputLinks = []
         inputPorts = []
         if ((self.fromObjects is not None) and len(self.fromObjects) > 0):
-            fromLinksVal = []
             for i in range(len(self.fromObjects)):
                 ilkey = getUuid(self.identifier + ".INPUT" + str(i + 1))
                 ipkey = getUuid(self.identifier + ".IP" + str(i + 1))
-                fromLinkVal = getUuid(self.fromObjects[i].node + "." + self.fromObjects[i].link)
-                inputLink = InputLink(key=ilkey, port=ipkey, from_link=fromLinkVal, field_map=fieldMaps)
+                fromLinkVal = getUuid(
+                    self.fromObjects[i].node + "." + self.fromObjects[i].link)
+                inputLink = InputLink(
+                    key=ilkey, port=ipkey, from_link=fromLinkVal, field_map=fieldMaps)
                 inputLinks.append(inputLink)
 
-                difkey = getUuid(self.identifier + ".INPUT" + str(i + 1) + ".FIELD1")
-                infld = self.createDynamicInputField("INPUT" + str(i + 1), difkey)
+                difkey = getUuid(self.identifier + ".INPUT" +
+                                 str(i + 1) + ".FIELD1")
+                infld = self.createDynamicInputField(
+                    "INPUT" + str(i + 1), difkey)
                 inflds = []
                 inflds.append(infld)
                 inputPort = InputPort(key=getUuid(self.identifier + ".IP" + str(i + 1)),
@@ -229,7 +257,8 @@ class Node:
         if ((self.toObjects is not None) and len(self.toObjects) > 0):
             toLinksVal = []
             for i in range(len(self.toObjects)):
-                lnkkey = getUuid(self.toObjects[i].node + "." + self.toObjects[i].link)
+                lnkkey = getUuid(
+                    self.toObjects[i].node + "." + self.toObjects[i].link)
                 toLinksVal.append(lnkkey)
             outputLink = OutputLink(key=olkey, port=opkey, to_links=toLinksVal)
             outputLinks = [outputLink]
@@ -237,15 +266,20 @@ class Node:
 
         operator = None
         if (self.type == "Start"):
-            operator = self.create_start(self.name, self.identifier, inputPorts, outputPorts)
+            operator = self.create_start(
+                self.name, self.identifier, inputPorts, outputPorts)
         elif (self.type == "End"):
-            operator = self.create_end(self.name, self.identifier, inputPorts, outputPorts)
+            operator = self.create_end(
+                self.name, self.identifier, inputPorts, outputPorts)
         elif (self.type == "Source"):
-            operator = self.create_source(self.name, self.identifier, inputPorts, outputPorts)
+            operator = self.create_source(
+                self.name, self.identifier, inputPorts, outputPorts)
         elif (self.type == "Target"):
-            operator = self.create_target(self.name, self.identifier, inputPorts, outputPorts)
+            operator = self.create_target(
+                self.name, self.identifier, inputPorts, outputPorts)
         elif (self.type == "Projector"):
-            operator = self.create_projection(self.name, self.identifier, inputPorts, outputPorts)
+            operator = self.create_projection(
+                self.name, self.identifier, inputPorts, outputPorts)
         return FlowNode(key=key, name=self.name, input_links=inputLinks, operator=operator, output_links=outputLinks)
 
     def getFieldMaps(self):
@@ -292,15 +326,14 @@ class Node:
             if (sentity is None or sentityType is None):
                 raise Exception('Entity is not set for operator', self.name)
             if (sschema is None or sconnection is None):
-                raise Exception('Connection/Schema are not set for operator', self.name)
+                raise Exception(
+                    'Connection/Schema are not set for operator', self.name)
             return sconnection + "/" + sschema + "/" + sentityType + ":" + sentity + "/SHAPE"
 
         else:
             return getUuid(self.identifier + ".INPUT" + str(inputNumber) + ".FIELD1")
 
     def getProjectionRules(self, vRules):
-        name_pattern_rule = NamePatternRule(matching_strategy=NamePatternRule.MATCHING_STRATEGY_NAME_ONLY,
-                                            rule_type=NamePatternRule.RULE_TYPE_INCLUDE, pattern=".*")
         rules = []
         if (vRules is not None and len(vRules) > 0):
             for r in range(len(vRules)):
@@ -335,7 +368,8 @@ class Node:
         if (createNewEntity is False):
             shape = Shape(key=sconnection + "/" + sschema + "/" + sentityType + ":" + sentity + "/SHAPE",
                           type=CompositeType())
-            srcEntity = "dataref:" + sconnection + "/" + sschema + "/" + sentityType + ":" + sentity
+            srcEntity = "dataref:" + sconnection + "/" + \
+                sschema + "/" + sentityType + ":" + sentity
             resourceName = sentityType + ":" + sentity
         else:
             resourceName = sentity
@@ -401,27 +435,38 @@ class Node:
 
             if (sconnectionReference is not None):
                 conParam = getUuid(sconnectionReference)
-                configValuesMap["connectionParam"] = ConfigParameterValue(parameter_value=conParam)
+                configValuesMap["connectionParam"] = ConfigParameterValue(
+                    parameter_value=conParam)
             elif (sconnection is not None):
-                con = RootObject(model_type=sconnectionType, key=sconnection, object_status=1)
-                configValuesMap["connectionParam"] = ConfigParameterValue(ref_value=con)
+                con = RootObject(model_type=sconnectionType,
+                                 key=sconnection, object_status=1)
+                configValuesMap["connectionParam"] = ConfigParameterValue(
+                    ref_value=con)
             if (sdataAssetReference is not None):
                 daParam = getUuid(sdataAssetReference)
-                configValuesMap["dataAssetParam"] = ConfigParameterValue(parameter_value=daParam)
+                configValuesMap["dataAssetParam"] = ConfigParameterValue(
+                    parameter_value=daParam)
             elif (sdataAsset is not None):
-                dataasset = RootObject(model_type=sdataAssetType, key=sdataAsset, object_status=1)
-                configValuesMap["dataAssetParam"] = ConfigParameterValue(ref_value=dataasset)
+                dataasset = RootObject(
+                    model_type=sdataAssetType, key=sdataAsset, object_status=1)
+                configValuesMap["dataAssetParam"] = ConfigParameterValue(
+                    ref_value=dataasset)
             if (sschemaReference is not None):
                 schemaParam = getUuid(sschemaReference)
-                configValuesMap["schemaParam"] = ConfigParameterValue(parameter_value=schemaParam)
+                configValuesMap["schemaParam"] = ConfigParameterValue(
+                    parameter_value=schemaParam)
             elif (sschema is not None):
-                schema = Schema(model_type="SCHEMA", key="dataref:" + sconnection + "/" + sschema, name=sschema)
-                configValuesMap["schemaParam"] = ConfigParameterValue(ref_value=schema)
+                schema = Schema(model_type="SCHEMA", key="dataref:" +
+                                sconnection + "/" + sschema, name=sschema)
+                configValuesMap["schemaParam"] = ConfigParameterValue(
+                    ref_value=schema)
             if (allowPushdown is not None):
-                configValuesMap["disablePushDownParam"] = ConfigParameterValue(object_value=allowPushdown)
+                configValuesMap["disablePushDownParam"] = ConfigParameterValue(
+                    object_value=allowPushdown)
             if (scustomParameter is not None):
                 customParamRef = getUuid(scustomParameter)
-                configValuesMap[scustomReference] = {"modelType": "CONFIG_PARAMETER_VALUE", "refValue": customParamRef}
+                configValuesMap[scustomReference] = {
+                    "modelType": "CONFIG_PARAMETER_VALUE", "refValue": customParamRef}
             if (scustomValue is not None):
                 configValuesMap[scustomReference] = {"modelType": "CONFIG_PARAMETER_VALUE",
                                                      "rootObjectValue": scustomValue}
@@ -440,12 +485,12 @@ class Node:
 
     def create_end(self, name, identifier, input_ports, output_ports):
         key = get_uuid()
-        op = EndOperator(key=key, name=name, identifier=identifier, input_ports=input_ports, output_ports=output_ports)
+        op = EndOperator(key=key, name=name, identifier=identifier,
+                         input_ports=input_ports, output_ports=output_ports)
         return op
 
     def create_source(self, name, identifier, input_ports, output_ports):
         key = get_uuid()
-        model_type= "FLOW_NODE"
         dataFormat = None
         sdc = SchemaDriftConfig(missing_column_handling=SchemaDriftConfig.MISSING_COLUMN_HANDLING_ALLOW,
                                 extra_column_handling=SchemaDriftConfig.EXTRA_COLUMN_HANDLING_ALLOW,
@@ -474,7 +519,6 @@ class Node:
 
     def create_target(self, name, identifier, input_ports, output_ports):
         key = get_uuid()
-        model_type= "FLOW_NODE"
         dataFormat = None
         is_predefined_shape = True
         is_copy_fields = False
@@ -510,7 +554,8 @@ class Node:
         if (stagingBucket is not None):
             if (stagingConnection is not None and stagingDataAsset is not None):
                 writeAttribute = OracleAdwcWriteAttributes(
-                    bucket_schema=Schema(name=stagingBucket, key="dataref:" + stagingConnection + "/" + stagingBucket),
+                    bucket_schema=Schema(
+                        name=stagingBucket, key="dataref:" + stagingConnection + "/" + stagingBucket),
                     staging_connection=Connection(key=stagingConnection, object_status=1,
                                                   model_type="ORACLE_OBJECT_STORAGE_CONNECTION"),
                     staging_data_asset=DataAsset(key=stagingDataAsset, object_status=1,
@@ -528,7 +573,6 @@ class Node:
 
     def create_projection(self, name, identifier, input_ports, output_ports):
         key = get_uuid()
-        op = Projection(key=key, name=name, identifier=identifier, input_ports=input_ports, output_ports=output_ports)
+        op = Projection(key=key, name=name, identifier=identifier,
+                        input_ports=input_ports, output_ports=output_ports)
         return op
-
-
