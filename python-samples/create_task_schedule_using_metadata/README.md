@@ -39,8 +39,9 @@ The columns should be tab separated and include;
 * TASK - task name that resides in the application that is passed to script
 
 ## Author
-David Allan - Consultant Principal Architect 
+David Allan  
 
+DIS Consultant Architect -
 david.allan@oracle.com
 
 
