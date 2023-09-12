@@ -30,15 +30,15 @@ optional arguments:
   -id DF_IDENTIFIER, --df_identifier DF_IDENTIFIER
                         dataflow ID
   -s SOURCE_DA, --source_da SOURCE_DA
-                        Data Source Data Asset
+                        Data Source Data Asset Key
   -sc SOURCE_CONN, --source_conn SOURCE_CONN
-                        Data Source connection
+                        Data Source connection key
   -t TARGET_DA, --target_da TARGET_DA
-                        Data Target Data Asset
+                        Data Target Data Asset Key
   -tc TARGET_CONN, --target_conn TARGET_CONN
-                        Data Target connection
+                        Data Target connection key
   -f FOLDER, --folder FOLDER
-                        Folder for data
+                        Folder Key
   -sh SCHEMA, --schema SCHEMA
                         Data Scema
   -p PROFILE, --profile PROFILE

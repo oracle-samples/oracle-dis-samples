@@ -120,19 +120,19 @@ if __name__ == '__main__':
                         help='dataflow ID')
     parser.add_argument('-s', '--source_da',
                         default='',
-                        help='Data Source Data Asset')
+                        help='Data Source Data Asset Key')
     parser.add_argument('-sc', '--source_conn',
                         default='',
-                        help='Data Source connection')
+                        help='Data Source connection key')
     parser.add_argument('-t', '--target_da',
                         default='',
-                        help='Data Target Data Asset')
+                        help='Data Target Data Asset key')
     parser.add_argument('-tc', '--target_conn',
                         default='',
-                        help='Data Target connection')
+                        help='Data Target connection key')
     parser.add_argument('-f', '--folder',
                         default='',
-                        help='Folder for data')
+                        help='Folder key')
     parser.add_argument('-sh', '--schema',
                         default='',
                         help='Data Scema')
