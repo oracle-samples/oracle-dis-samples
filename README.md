@@ -3,6 +3,7 @@
 ## Reference Architecture
 
 This Terraform code creates a workspace in a defined VCN subnet, and applied all the necessary policies for the execution against the data assets for OCI Object Store and Oracle ADW. The Terraform application also uploads all the DIS Templates tasks, making the workspace readily available.
+
 ## Architecture Diagram 
 
 ![](./images/DIS-Reference-Architecture.png)

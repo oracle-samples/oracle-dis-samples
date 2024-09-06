@@ -1,0 +1,431 @@
+{
+    "modelType": "REST_TASK",
+    "name": "Execute OCI Dataflow Application With Pool",
+    "identifier": "EXECUTE_OCI_DATAFLOW_APPLICATION_WITH_POOL",
+    "parameters": [
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Region",
+            "defaultValue": "us-ashburn-1",
+            "isInput": true,
+            "isOutput": false,
+            "name": "REGION",
+            "typeName": "STRING"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Compartment id for application.",
+            "defaultValue": "compartmentid",
+            "isInput": true,
+            "isOutput": false,
+            "name": "COMPARTMENT_ID",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Display name",
+            "defaultValue": "PySpark CSV to Parquet",
+            "isInput": true,
+            "isOutput": false,
+            "name": "DISPLAY_NAME",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Driver shape.",
+            "defaultValue": "VM.Standard2.1",
+            "isInput": true,
+            "isOutput": false,
+            "name": "DRIVER_SHAPE",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Executor shape.",
+            "defaultValue": "VM.Standard2.1",
+            "isInput": true,
+            "isOutput": false,
+            "name": "EXECUTOR_SHAPE",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/INTEGER",
+            "configValues": {
+                "configParamValues": {
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "The number of executor VMs requested.",
+            "defaultValue": "1",
+            "isInput": true,
+            "isOutput": false,
+            "name": "NUM_EXECUTORS",
+            "typeName": "INTEGER"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Job type, could be batch or streaming.",
+            "defaultValue": "BATCH",
+            "isInput": true,
+            "isOutput": false,
+            "name": "JOB_TYPE",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 4000
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Parameters",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "PARAMETERS",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 4000
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "Logs bucket URI.",
+            "defaultValue": "oci://bucketname@namespace/",
+            "isInput": true,
+            "isOutput": false,
+            "name": "LOGS_BUCKET_URI",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 4000
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs.",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "WAREHOUSE_BUCKET_URI",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "PRIVATE_ENDPOINT_ID",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 4000
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "CONFIGURATION",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "POOL_ID",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "",
+            "defaultValue": " ",
+            "isInput": true,
+            "isOutput": false,
+            "name": "ARCHIVE_URI",
+            "typeName": "VARCHAR"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                },
+                "parentRef": {}
+            },
+            "description": "OCI Dataflow application id.",
+            "defaultValue": "application",
+            "isInput": true,
+            "isOutput": false,
+            "name": "APPLICATION_ID",
+            "typeName": "VARCHAR"
+        }
+    ],
+    "opConfigValues": {
+        "configParamValues": {
+            "successCondition": {
+                "refValue": {
+                    "modelType": "EXPRESSION",
+                    "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+                }
+            }
+        }
+    },
+    "isConcurrentAllowed": true,
+    "executeRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "key": "131eede9-4a81-42d6-bcbc-482d77c63296",
+        "methodType": "POST",
+        "requestHeaders": {
+            "Content-Type": "application/json"
+        },
+        "configValues": {
+            "configParamValues": {
+                "requestURL": {
+                    "stringValue": "https://dataflow.${REGION}.oci.oraclecloud.com/20200129/runs"
+                },
+                "requestPayload": {
+                    "refValue": {
+                        "modelType": "JSON_TEXT",
+                        "parentRef": {
+                            "parent": "131eede9-4a81-42d6-bcbc-482d77c63296"
+                        },
+                        "encoded": false,
+                        "configValues": {
+                            "configParamValues": {
+                                "dataParam": {
+                                    "stringValue": "{\n \"applicationId\": \"${APPLICATION_ID}\",\n \"compartmentId\": \"${COMPARTMENT_ID}\",\n \"displayName\": \"${DISPLAY_NAME}\",\n \"driverShape\": \"${DRIVER_SHAPE}\",\n \"executorShape\": \"${EXECUTOR_SHAPE}\",\n \"numExecutors\": ${NUM_EXECUTORS},\n \"maxDurationInMinutes\":-1,\n \"configuration\":{${CONFIGURATION}},\n \"poolId\":\"${POOL_ID}\",\n \"parameters\":[${PARAMETERS}],\n \"archiveUri\":\"${ARCHIVE_URI}\",\n \"type\":\"${JOB_TYPE}\",\n \"logsBucketUri\": \"${LOGS_BUCKET_URI}\",\n \"privateEndpointId\":\"${PRIVATE_ENDPOINT_ID}\",\n \"warehouseBucketUri\":\"${WAREHOUSE_BUCKET_URI}\",\n \"freeformTags\":{},\n \"definedTags\":{}\n}\n"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "cancelRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "methodType": "DELETE",
+        "requestHeaders": {},
+        "configValues": {
+            "configParamValues": {
+                "requestURL": {
+                    "stringValue": "https://dataflow.${REGION}.oci.oraclecloud.com/20200129/runs/#{ID}"
+                }
+            }
+        }
+    },
+    "pollRestCallConfig": {
+        "modelType": "POLL_REST_CALL_CONFIG",
+        "key": "e747b89a-e27c-419d-84e4-6776a666131d",
+        "methodType": "GET",
+        "requestHeaders": {},
+        "configValues": {
+            "configParamValues": {
+                "pollMaxDuration": {
+                    "objectValue": 60000
+                },
+                "pollMaxDurationUnit": {
+                    "stringValue": "SECONDS"
+                },
+                "pollInterval": {
+                    "objectValue": 60
+                },
+                "pollIntervalUnit": {
+                    "stringValue": "SECONDS"
+                },
+                "requestURL": {
+                    "stringValue": "https://dataflow.${REGION}.oci.oraclecloud.com/20200129/runs/#{ID}"
+                },
+                "pollCondition": {
+                    "refValue": {
+                        "modelType": "EXPRESSION",
+                        "parentRef": {
+                            "parent": "e747b89a-e27c-419d-84e4-6776a666131d"
+                        },
+                        "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+                    }
+                }
+            }
+        }
+    },
+    "typedExpressions": [
+        {
+            "modelType": "TYPED_EXPRESSION",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 2000
+                    }
+                },
+                "parentRef": {}
+            },
+            "expression": "json_path(SYS.RESPONSE_PAYLOAD_JSON, '$.id')",
+            "name": "ID"
+        }
+    ],
+    "apiCallMode": "ASYNC_GENERIC",
+    "authConfig": {
+        "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+        "resourcePrincipalSource": "WORKSPACE"
+    },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }         
+}

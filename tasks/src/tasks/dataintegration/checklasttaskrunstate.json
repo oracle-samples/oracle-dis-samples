@@ -1,0 +1,118 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Check Last Task Run State",
+  "description": "Check last task run status. The task must be in the same application that this task is deployed into (since the system parameter application key is used). ",
+  "identifier": "CHECK_LAST_TASK_RUN_STATE",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Task type, one of INTEGRATION_TASK, DATA_LOADER_TASK, REST_TASK, PIPELINE_TASK, SQL_TASK",
+      "defaultValue": "INTEGRATION_TASK",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TASK_TYPE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "The task name, task runs will be listed using nameStartsWith",
+      "defaultValue": "ParamDemo_Task",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TASK_NAME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Success Condition, Success Condition, Success Condition, Success Condition"
+          }
+        }
+      },
+      "description": "Task status, one of NOT_STARTED, QUEUED, RUNNING, TERMINATING, TERMINATED, SUCCESS, ERROR\n",
+      "defaultValue": "SUCCESS",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TASK_STATUS",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/BOOLEAN",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Success Condition, Success Condition, Success Condition"
+          }
+        }
+      },
+      "description": "Condition to include ",
+      "defaultValue": "true",
+      "isInput": true,
+      "isOutput": false,
+      "name": "CONDITION",
+      "typeName": "BOOLEAN"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300 AND (CAST(JSON_PATH(SYS.RESPONSE_PAYLOAD, '$.items[0].status') as String) == '${TASK_STATUS}' OR  ${CONDITION})"
+        }
+      }
+    }
+  },
+  "isConcurrentAllowed": true,
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "GET",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://dataintegration.${SYS.REGION}.oci.oraclecloud.com/20200430/workspaces/${SYS.WORKSPACE_ID}/applications/${SYS.APPLICATION_KEY}/taskRuns?limit=1&sortOrder=DESC&sortBy=timeUpdated&aggregatorType=${TASK_TYPE}&nameStartsWith=${TASK_NAME}"
+        }
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

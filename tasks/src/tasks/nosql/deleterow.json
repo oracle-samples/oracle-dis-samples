@@ -1,0 +1,153 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Delete Row from NoSQL",
+  "description": "Delete a row from a NoSQL table.",
+  "identifier": "DELETE_ROW_FROM_NOSQL",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region string for URL.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Compartment id for metrics.",
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Column name.",
+      "defaultValue": "id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COLUMN",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Column value.",
+      "defaultValue": "1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "VALUE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Table name.",
+      "defaultValue": "mytable",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TABLE_NAME",
+      "typeName": "STRING"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://nosql.${REGION}.oci.oraclecloud.com/20190828/tables/${TABLE_NAME}/rows?compartmentId=${COMPARTMENT_ID}&key=${COLUMN}:${VALUE}"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

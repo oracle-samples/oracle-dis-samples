@@ -1,0 +1,257 @@
+{
+  "modelType": "REST_TASK",
+  "name": "AI Document Table Extraction Task",
+  "description": "Table extraction using Document Understanding API.\nhttps://docs.oracle.com/en-us/iaas/api/#/en/document-understanding/20221109/ProcessorJob/CreateProcessorJob",
+  "identifier": "AIDOCUMENTTABLEEXTRACTIONTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "namespacename",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_NAMESPACE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "templatedemo",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_BUCKET",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "visionout",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_PREFIX",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "TableDetection",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_NAME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "[{\"bucketName\":\"example\",\"namespaceName\":\"idexample\",\"objectName\":\"document.txt\"}]",
+      "isInput": true,
+      "isOutput": false,
+      "name": "INPUT_DATA",
+      "typeName": "STRING"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+          }
+        }
+      }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n    \"processorConfig\": {\n        \"processorType\": \"GENERAL\",\n        \"features\": [\n            {\n                \"featureType\": \"TABLE_EXTRACTION\"\n            }\n        ]\n    },\n    \"inputLocation\": {\n        \"sourceType\": \"OBJECT_STORAGE_LOCATIONS\",\n        \"objectLocations\": ${INPUT_DATA}\n    },\n    \"outputLocation\": {\n        \"bucketName\": \"${OUTPUT_BUCKET}\",\n        \"namespaceName\": \"${OUTPUT_NAMESPACE}\",\n        \"prefix\": \"${OUTPUT_PREFIX}\"\n    },\n    \"compartmentId\": \"${COMPARTMENT}\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "requestURL": {
+          "stringValue": "https://document.aiservice.${REGION}.oci.oraclecloud.com/20221109/processorJobs"
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://vision.aiservice.${REGION}.oci.oraclecloud.com/20220125/documentJobs/#{DOCUMENT_JOB_OCID}/actions/cancel"
+        }
+      }
+    }
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+          }
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "requestURL": {
+          "stringValue": "https://document.aiservice.${REGION}.oci.oraclecloud.com/20221109/processorJobs/#{DOCUMENT_JOB_OCID}"
+        },
+        "pollMaxDuration": {
+          "objectValue": 600
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.id') AS String)",
+      "name": "DOCUMENT_JOB_OCID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authDetails": {
+    "modelType": "RESOURCE_PRINCIPAL_AUTH_DETAILS"
+  },
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

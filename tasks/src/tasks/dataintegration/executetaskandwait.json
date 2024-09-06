@@ -1,0 +1,137 @@
+{
+    "modelType": "REST_TASK",
+    "name": "Execute Task and Wait",
+    "description": "Get a task using its name and type from the current application and workspace. The task must be in the same application that this task is deployed into (since the system parameter application key is used). ",
+    "identifier": "EXECUTE_TASK_AND_WAIT",
+    "parameters": [
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+                    }
+                }
+            },
+            "description": "",
+            "defaultValue": "taskKey",
+            "isInput": true,
+            "isOutput": false,
+            "name": "TASK_KEY",
+            "typeName": "VARCHAR"
+        }
+    ],
+    "opConfigValues": {
+        "configParamValues": {
+            "successCondition": {
+                "refValue": {
+                    "modelType": "EXPRESSION",
+                    "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.status') AS String) == 'SUCCESS'"
+                }
+            }
+        }
+    },
+    "isConcurrentAllowed": true,
+    "executeRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "key": "79c7a56c-9c20-4261-a4d7-ed714c21e5d7",
+        "methodType": "POST",
+        "requestHeaders": {
+            "Content-Type": "application/json"
+        },
+        "configValues": {
+            "configParamValues": {
+                "requestURL": {
+                    "stringValue": "https://dataintegration.${SYS.REGION}.oci.oraclecloud.com/20200430/workspaces/${SYS.WORKSPACE_ID}/applications/${SYS.APPLICATION_KEY}/taskRuns"
+                },
+                "requestPayload": {
+                    "refValue": {
+                        "modelType": "JSON_TEXT",
+                        "key": "ce425302-cf45-45b7-9705-be92aa4b4fc9",
+                        "parentRef": {
+                            "parent": "79c7a56c-9c20-4261-a4d7-ed714c21e5d7"
+                        },
+                        "encoded": false,
+                        "configValues": {
+                            "configParamValues": {
+                                "dataParam": {
+                                    "stringValue": "{\n  \"registryMetadata\": {\n    \"aggregatorKey\": \"${TASK_KEY}\"\n  }\n}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "cancelRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "methodType": "DELETE"
+    },
+    "pollRestCallConfig": {
+        "modelType": "POLL_REST_CALL_CONFIG",
+        "methodType": "GET",
+        "configValues": {
+            "configParamValues": {
+                "pollMaxDuration": {
+                    "objectValue": 120
+                },
+                "pollMaxDurationUnit": {
+                    "stringValue": "SECONDS"
+                },
+                "pollInterval": {
+                    "objectValue": 60
+                },
+                "pollIntervalUnit": {
+                    "stringValue": "SECONDS"
+                },
+                "pollCondition": {
+                    "refValue": {
+                        "modelType": "EXPRESSION",
+                        "key": "88fb64ca-9dfe-45f3-82ea-55efb83ed51f",
+                        "parentRef": {
+                            "parent": "9497e5b6-b863-4a34-8dea-410baf92ae62"
+                        },
+                        "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.status') AS String) != 'SUCCESS' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.status') AS String) != 'ERROR' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.status') AS String) != 'TERMINATED'",
+                        "configValues": {
+                            "parentRef": {
+                                "parent": "88fb64ca-9dfe-45f3-82ea-55efb83ed51f"
+                            }
+                        }
+                    }
+                },
+                "requestURL": {
+                    "stringValue": "https://dataintegration.${SYS.REGION}.oci.oraclecloud.com/20200430/workspaces/${SYS.WORKSPACE_ID}/applications/${SYS.APPLICATION_KEY}/taskRuns/#{ID}"
+                }
+            }
+        }
+    },
+    "typedExpressions": [
+        {
+            "modelType": "TYPED_EXPRESSION",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 2000
+                    }
+                }
+            },
+            "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.key') AS String)",
+            "name": "ID"
+        }
+    ],
+    "apiCallMode": "ASYNC_GENERIC",
+    "authConfig": {
+        "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+        "resourcePrincipalSource": "WORKSPACE"
+    },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }         
+
+}

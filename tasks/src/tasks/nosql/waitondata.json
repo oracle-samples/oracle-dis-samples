@@ -1,0 +1,226 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Wait For Data from NoSQL",
+  "description": "Wait for data to be at a specific value in a NoSQL table and row. The table name, primary key identifier and JSON path and value are also provided. ",
+  "identifier": "WAIT_FOR_DATA_FROM_NOSQL",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region string for URL.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Compartment id for metrics.",
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Column name.",
+      "defaultValue": "id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COLUMN",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Column value.",
+      "defaultValue": "1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "VALUE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Table name.",
+      "defaultValue": "mytable",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TABLE_NAME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Polling API Config: (pollCondition),Success Condition"
+          }
+        }
+      },
+      "description": "The JSON path to a property to compare against the END_VALUE. ",
+      "defaultValue": "$.value.data.status",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JSON_PATH_VARIABLE",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Polling API Config: (pollCondition),Success Condition"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "SUCCESS",
+      "isInput": true,
+      "isOutput": false,
+      "name": "END_VALUE",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300 and JSON_PATH(SYS.RESPONSE_PAYLOAD, '${JSON_PATH_VARIABLE}') == '${END_VALUE}'"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "GET",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://nosql.${REGION}.oci.oraclecloud.com/20190828/tables/${TABLE_NAME}/rows?compartmentId=${COMPARTMENT_ID}&key=${COLUMN}:${VALUE}"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 8
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "HOURS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://nosql.${REGION}.oci.oraclecloud.com/20190828/tables/${TABLE_NAME}/rows?compartmentId=${COMPARTMENT_ID}&key=${COLUMN}:${VALUE}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "JSON_PATH(SYS.RESPONSE_PAYLOAD, '${JSON_PATH_VARIABLE}') != '${END_VALUE}'"
+          }
+        }
+      }
+    }
+  },
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Object Storage Copy Task",
+  "description": "Copy objects across OCI Object Storage.",
+  "identifier": "OBJECTSTORAGECOPYTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "namespace",
+      "isInput": true,
+      "isOutput": false,
+      "name": "NAMESPACE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "bucket_name",
+      "isInput": true,
+      "isOutput": false,
+      "name": "BUCKET",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "",
+      "isInput": true,
+      "isOutput": false,
+      "name": "BUCKET_NAME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Destination bucket.",
+      "defaultValue": "bucketname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DESTINATION_BUCKET",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Destination namespace.",
+      "defaultValue": "destinationnamespace",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DESTINATION_NAMESPACE",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Destination object name.",
+      "defaultValue": "destinationobjectname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DESTINATION_OBJECT_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Destination region.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DESTINATION_REGION",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "sourceobjectname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SOURCE_OBJECT_NAME",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "stringValue": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://objectstorage.${REGION}.oraclecloud.com/n/${NAMESPACE}/b/${BUCKET_NAME}/actions/copyObject"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n  \"destinationBucket\": \"${DESTINATION_BUCKET}\",\n  \"destinationNamespace\": \"${DESTINATION_NAMESPACE}\",\n  \"destinationObjectName\": \"${DESTINATION_OBJECT_NAME}\",\n  \"destinationRegion\": \"${DESTINATION_REGION}\",\n  \"sourceObjectName\": \"${SOURCE_OBJECT_NAME}\"\n}\n"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 600
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://objectstorage.${REGION}.oraclecloud.com/workRequests/#{WORK_REQUEST_ID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_HEADERS, '$.status') AS String) != 'COMPLETED' AND CAST(json_path(SYS.RESPONSE_HEADERS, '$.status') AS String) != 'FAILED'"
+          }
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_HEADERS, '$.opc-work-request-id[0]') AS String)",
+      "name": "WORK_REQUEST_ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

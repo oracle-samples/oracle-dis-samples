@@ -1,0 +1,259 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Execute Data Science Job",
+  "description": "Execute Data Science Job and wait for it to complete.",
+  "identifier": "EXECUTE_DATA_SCIENCE_JOB",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Data Science project id.",
+      "defaultValue": "enter_project_ocid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "PROJECT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Data Science job id.",
+      "defaultValue": "enter_job_id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Compartment id to create run.",
+      "defaultValue": "enter_compartment_id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Data Science job name.",
+      "defaultValue": "MyJob",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Command line args",
+      "defaultValue": " ",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMMAND_LINE_ARGS",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Maximum runtime",
+      "defaultValue": "1200",
+      "isInput": true,
+      "isOutput": false,
+      "name": "MAXIMUM_RUNTIME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Environment variables",
+      "defaultValue": " ",
+      "isInput": true,
+      "isOutput": false,
+      "name": "ENVIRONMENT_VARS",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+          }
+        }
+      }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://datascience.${REGION}.oci.oraclecloud.com/20190101/jobRuns"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n  \"projectId\": \"${PROJECT_ID}\",\n  \"jobConfigurationOverrideDetails\": {\n    \"commandLineArguments\": \"${COMMAND_LINE_ARGS}\",\n    \"maximumRuntimeInMinutes\": \"${MAXIMUM_RUNTIME}\",\n    \"environmentVariables\": { ${ENVIRONMENT_VARS} },\n\t  \"jobType\": \"DEFAULT\"\n  },\n  \"jobId\": \"${JOB_ID}\",\n  \"compartmentId\": \"${COMPARTMENT_ID}\",\n  \"displayName\": \"${JOB_NAME}\",\n  \"freeformTags\": {},\n  \"definedTags\": {},\n  \"jobLogConfigurationOverrideDetails\": null\n}\n"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 1200
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://datascience.${REGION}.oci.oraclecloud.com/20190101/jobRuns/#{JOB_RUN_ID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+          }
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        },
+        "parentRef": {}
+      },
+      "expression": "json_path(SYS.RESPONSE_PAYLOAD_JSON, '$.id')",
+      "name": "JOB_RUN_ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+    "registryMetadata": {
+        "aggregatorKey": "{{PROJECT_KEY}}"
+    }
+}

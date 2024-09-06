@@ -1,0 +1,114 @@
+{
+  "modelType": "REST_TASK",
+  "key": "4a08b3ac-7704-4716-96b4-c82c349e2911",
+  "identifier": "PUBLISHNOTIFICATIONTASK",
+  "name": "PublishNotificationTask",
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  },
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "stringValue": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+      }
+    },
+    "parentRef": {}
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://notification.${REGION}.oci.oraclecloud.com/20181201/topics/${TOPICID}/messages"
+        },
+        "requestPayload": {
+          "parameterValue": "cee003fb-24e7-4da2-96cd-bbcab457cf00"
+        }
+      }
+    }
+  },
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "key": "311fa272-7fb6-42e3-adfc-38d019f44c3b",
+      "parentRef": {
+        "parent": "4a08b3ac-7704-4716-96b4-c82c349e2911"
+      },
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "",
+      "isInput": true,
+      "isOutput": false,
+      "name": "TOPICID",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "ef308c23-d4f1-4c28-9083-c8f93e0e4703",
+      "parentRef": {
+        "parent": "4a08b3ac-7704-4716-96b4-c82c349e2911"
+      },
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request URL)"
+          }
+        },
+        "parentRef": {}
+      },
+      "description": "Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "cee003fb-24e7-4da2-96cd-bbcab457cf00",
+      "typeName": "com.oracle.dicom.model.dataformat.JsonText",
+      "name": "PAYLOAD_BODY",
+      "description": "",
+      "isInput": true,
+      "isOutput": false,
+      "rootObjectDefaultValue": {
+        "modelType": "JSON_TEXT",
+        "key": "b94bb882-2484-46d6-bc00-433d860a08f0",
+        "configValues": {
+          "configParamValues": {
+            "dataParam": {
+              "stringValue": "{\"title\": \"Put your title here\", \"body\": \"You can put email body here. Check out OCI Data Integration!\"}"
+            }
+          }
+        }
+      },
+      "type": {
+        "modelType": "JAVA_TYPE",
+        "javaTypeName": "com.oracle.dicom.model.dataformat.JsonText"
+      }
+    }
+  ]
+}
