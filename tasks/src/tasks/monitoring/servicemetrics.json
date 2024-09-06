@@ -1,0 +1,173 @@
+{
+  "modelType": "REST_TASK",
+  "name": "ServiceMetricsTask",
+  "identifier": "SERVICEMETRICSTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region string for URL.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        },
+        "parentRef": {}
+      },
+      "description": "Service namespace",
+      "defaultValue": "oci_autonomous_database",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SERVICE_NAMESPACE",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "CpuUtilization[1m]{deploymentType = \\\"Shared\\\"}.mean()",
+      "isInput": true,
+      "isOutput": false,
+      "name": "QUERY",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "2022-12-16T16:19:00.000Z",
+      "isInput": true,
+      "isOutput": false,
+      "name": "END_TIME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "2022-12-16T15:18:00.000Z",
+      "isInput": true,
+      "isOutput": false,
+      "name": "START_TIME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Compartment id for metrics.",
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "STRING"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://telemetry.${REGION}.oraclecloud.com/20180401/metrics/actions/summarizeMetricsData?compartmentId=${COMPARTMENT_ID}"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n  \"namespace\": \"${SERVICE_NAMESPACE}\",\n  \"query\": \"${QUERY}\",\n  \"endTime\": \"${END_TIME}\",\n  \"startTime\": \"${START_TIME}\"\n}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

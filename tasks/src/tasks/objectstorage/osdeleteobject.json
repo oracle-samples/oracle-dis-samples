@@ -1,0 +1,152 @@
+{
+  "modelType": "REST_TASK",
+  "identifier": "OBJECTSTORAGEDELETEOBJECTTASK",
+  "name": "Object Storage Delete Object Task",
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  },
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "stringValue": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://objectstorage.${REGION}.oraclecloud.com/n/${NAMESPACE}/b/${BUCKET_NAME}/o/${OBJECT_NAME}"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\"newName\": \"${NEW_NAME}\", \"sourceName\": \"${SOURCE_NAME}\" }"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "namespace",
+      "isInput": true,
+      "isOutput": false,
+      "name": "NAMESPACE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "bucket_name",
+      "isInput": true,
+      "isOutput": false,
+      "name": "BUCKET",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "typeName": "STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": ""
+          }
+        }
+      },
+      "name": "BUCKET_NAME",
+      "description": "",
+      "isInput": true,
+      "isOutput": false,
+      "defaultValue": "bucketName"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "typeName": "STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": "4000"
+          },
+          "usedInParam": {
+            "stringValue": ""
+          }
+        }
+      },
+      "name": "OBJECT_NAME",
+      "description": "",
+      "isInput": true,
+      "isOutput": false,
+      "defaultValue": "objectName"
+    }
+  ]
+}

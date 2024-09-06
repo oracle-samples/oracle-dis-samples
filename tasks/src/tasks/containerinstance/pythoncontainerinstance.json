@@ -1,0 +1,372 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Run Python Container Instance",
+  "identifier": "RUN_PYTHON_CONTAINR_INSTANCE",
+  "description": "Run a container instance for a long running job. See https://www.oracle.com/cloud/cloud-native/container-instances/",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Bucket name.",
+      "defaultValue": "bucketname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "BUCKET_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 1000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Python script name",
+      "defaultValue": "script.py",
+      "isInput": true,
+      "isOutput": false,
+      "name": "PYTHON_SCRIPT",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "OCI Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Compartment to create container instance in.",
+      "defaultValue": "ocid1.compartment.oc1.....",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "nDUb:US-ASHBURN-AD-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "AVAILABILITY_DOMAIN",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "CI.Standard.E4.Flex",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SHAPE",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/INTEGER",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OCPUS",
+      "typeName": "INTEGER"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/INTEGER",
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "MEMORY_IN_GB",
+      "typeName": "INTEGER"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Subnet OCID.",
+      "defaultValue": "ocid1.subnet.oc1.iad.....",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SUBNET_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Container instance job name.",
+      "defaultValue": "container-instance-job",
+      "isInput": true,
+      "isOutput": false,
+      "name": "CI_DISPLAY_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Environment variables, specified as VAR:VAL, ...",
+      "defaultValue": " ",
+      "isInput": true,
+      "isOutput": false,
+      "name": "ENVIRONMENT_VARS",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "container-job",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Container URL, by default using the OCI CLI container.",
+      "defaultValue": "ghcr.io/oracle/oci-cli",
+      "isInput": true,
+      "isOutput": false,
+      "name": "CONTAINER_URL_PATH",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "true",
+      "isInput": true,
+      "isOutput": false,
+      "name": "IS_PUBLIC_IP_ASSIGNED",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleDetails') AS String) == 'CONTAINER_TERMINATED'"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "configValues": {
+      "configParamValues": {
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n \"containers\": [\n  { \n   \"imageUrl\": \"${CONTAINER_URL_PATH}\",\n   \"displayName\": \"${JOB_NAME}\",\n   \"environmentVariables\": { ${ENVIRONMENT_VARS} },\n   \"command\": [ \"/bin/sh\", \"-c\" ],\n   \"arguments\": [ \"oci --auth resource_principal os object get --bucket-name ${BUCKET_NAME} --name ${PYTHON_SCRIPT} --file -  | python3\" ],\n   \"definedTags\": {},\n   \"freeformTags\": {}\n  }\n ],\n \"compartmentId\": \"${COMPARTMENT_ID}\",\n \"availabilityDomain\": \"${AVAILABILITY_DOMAIN}\",\n \"shape\": \"${SHAPE}\",\n \"shapeConfig\": {\n  \"ocpus\": ${OCPUS},\n  \"memoryInGBs\": ${MEMORY_IN_GB}\n },\n \"vnics\": [\n  { \n   \"subnetId\": \"${SUBNET_ID}\",\n   \"isPublicIpAssigned\": ${IS_PUBLIC_IP_ASSIGNED},\n   \"skipSourceDestCheck\": true\n  } \n ],\n \"displayName\": \"${CI_DISPLAY_NAME}\",\n \"gracefulShutdownTimeoutInSeconds\": 0,\n \"containerRestartPolicy\": \"NEVER\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "requestURL": {
+          "stringValue": "https://compute-containers.${REGION}.oci.oraclecloud.com/20210415/containerInstances"
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 1000
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://compute-containers.${REGION}.oci.oraclecloud.com/20210415/containers/#{CI_ID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleDetails') AS String) != 'CONTAINER_TERMINATED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'DELETED'"
+          }
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.containers[0].containerId') AS String)",
+      "name": "CI_ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

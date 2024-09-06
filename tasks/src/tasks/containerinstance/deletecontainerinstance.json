@@ -1,0 +1,78 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Delete Container Instance",
+  "description": "Delete container instance.",
+  "identifier": "DELETE_CONTAINER_INSTANCE",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL), Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Container instance ocid.",
+      "defaultValue": "enter_ocid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "CONTAINER_INSTANCE_ID",
+      "typeName": "STRING"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://compute-containers.${REGION}.oci.oraclecloud.com/20210415/containerInstances/${CONTAINER_INSTANCE_ID}"
+        }
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}
+

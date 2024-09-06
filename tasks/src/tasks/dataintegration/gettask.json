@@ -1,0 +1,83 @@
+{
+    "modelType": "REST_TASK",
+    "name": "Get Task",
+    "description": "Get a task using its name and type from the current application and workspace. The task must be in the same application that this task is deployed into (since the system parameter application key is used). ",
+    "identifier": "GET_TASK",
+    "parameters": [
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request URL)"
+                    }
+                }
+            },
+            "description": "Task type, one of INTEGRATION_TASK, DATA_LOADER_TASK, REST_TASK, PIPELINE_TASK, SQL_TASK",
+            "defaultValue": "INTEGRATION_TASK",
+            "isInput": true,
+            "isOutput": false,
+            "name": "TASK_TYPE",
+            "typeName": "STRING"
+        },
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request URL)"
+                    }
+                }
+            },
+            "description": "The task name, task runs will be listed using name query parameter",
+            "defaultValue": "ParamDemo_Task",
+            "isInput": true,
+            "isOutput": false,
+            "name": "TASK_NAME",
+            "typeName": "STRING"
+        }
+    ],
+    "opConfigValues": {
+        "configParamValues": {
+            "successCondition": {
+                "refValue": {
+                    "modelType": "EXPRESSION",
+                    "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+                }
+            }
+        }
+    },
+    "isConcurrentAllowed": true,
+    "executeRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "methodType": "GET",
+        "requestHeaders": {
+            "Content-Type": "application/json"
+        },
+        "configValues": {
+            "configParamValues": {
+                "requestURL": {
+                    "stringValue": "https://dataintegration.${SYS.REGION}.oci.oraclecloud.com/20200430/workspaces/${SYS.WORKSPACE_ID}/applications/${SYS.APPLICATION_KEY}/publishedObjects?limit=1&sortOrder=DESC&sortBy=timeUpdated&aggregatorType=${TASK_TYPE}&name=${TASK_NAME}"
+                }
+            }
+        }
+    },
+    "typedExpressions": [],
+    "apiCallMode": "SYNCHRONOUS",
+    "authConfig": {
+        "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+        "resourcePrincipalSource": "WORKSPACE"
+    },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }   
+
+}

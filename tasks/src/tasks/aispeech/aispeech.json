@@ -1,0 +1,261 @@
+{
+  "modelType": "REST_TASK",
+  "name": "AI Speech Task",
+  "description": "Analyze objects in OCI Object Storage and extract information from the speech documents.",
+  "identifier": "AISPEECHTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL), Execute API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "[{\"type\":\"PROFANITY\",\"mode\":\"REMOVE\"}]",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_FILTERS",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Compartment id for job.",
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Display name for speech job.",
+      "defaultValue": "SpeechJob",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DISPLAY_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Output namspace.",
+      "defaultValue": "namespacename",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_NAMESPACE",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Output prefix for folder containing generated objects.",
+      "defaultValue": "speechout",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_PREFIX",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Output bucket name.",
+      "defaultValue": "a_delta_archive",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_BUCKET",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Input data, specify namespace, bucket name and object names.",
+      "defaultValue": "[{\"namespaceName\": \"namespacename\",\"bucketName\": \"a_delta_changes\",\"objectNames\": [\"the-poet.wav\"] } ]",
+      "isInput": true,
+      "isOutput": false,
+      "name": "INPUT_DATA",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://speech.aiservice.${REGION}.oci.oraclecloud.com/20220101/transcriptionJobs"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{  \"normalization\": {\"filters\": ${JOB_FILTERS},    \"isPunctuationEnabled\": true  },  \"compartmentId\": \"${COMPARTMENT_ID}\",  \"displayName\": \"${DISPLAY_NAME}\",  \"freeformTags\": {},  \"definedTags\": {},  \"modelDetails\": {    \"domain\": \"GENERIC\",    \"languageCode\": \"en-US\"  },  \"inputLocation\": {    \"locationType\": \"OBJECT_LIST_INLINE_INPUT_LOCATION\",    \"objectLocations\": ${INPUT_DATA}  },  \"outputLocation\": {    \"namespaceName\": \"${OUTPUT_NAMESPACE}\",    \"bucketName\": \"${OUTPUT_BUCKET}\",    \"prefix\": \"${OUTPUT_PREFIX}\"  },  \"additionalTranscriptionFormats\": null}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 600
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://speech.aiservice.${REGION}.oci.oraclecloud.com/20220101/transcriptionJobs/#{SPEECH_JOB_OCID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+          }
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.id') AS String)",
+      "name": "SPEECH_JOB_OCID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

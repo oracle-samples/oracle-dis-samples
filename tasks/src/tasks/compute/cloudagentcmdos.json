@@ -1,0 +1,269 @@
+{
+  "modelType": "REST_TASK",
+  "name": "ExecuteCmdCloudAgentLogTask",
+  "description": "Execute command on Cloud Agent in OCI Compute and Log result in OCI Object Storage.",
+  "identifier": "EXECUTECMDCLOUDAGENTLOGTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "Compute instance id run run on Cloud Agent.",
+      "defaultValue": "instanceid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "INSTANCE_ID",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Compartment Id to create the command within.",
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Shell script string.",
+      "defaultValue": "echo 'Hello World'",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SCRIPT_TEXT",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "OCI region for endpoint.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Command name.",
+      "defaultValue": "Cloud agent demo",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMMAND_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "OCI Object Storage Namespace Name",
+      "defaultValue": "yournamespace",
+      "isInput": true,
+      "isOutput": false,
+      "name": "NAMESPACE_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "OCI Object Storage bucket name for log.",
+      "defaultValue": "yourbucketname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "BUCKET_NAME",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "OCI Object Storage log name",
+      "defaultValue": "yourobjectname",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OBJECT_NAME",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://iaas.${REGION}.oraclecloud.com/20180530/instanceAgentCommands"
+        },
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{  \"compartmentId\": \"${COMPARTMENT_ID}\", \"executionTimeOutInSeconds\": 3600,  \"displayName\": \"${COMMAND_NAME}\",  \"target\": {    \"instanceId\": \"${INSTANCE_ID}\"  },  \"content\": {    \"source\": {      \"sourceType\": \"TEXT\",     \"text\": \"${SCRIPT_TEXT}\"    },    \"output\": {      \"outputType\": \"OBJECT_STORAGE_TUPLE\", \"namespaceName\": \"${NAMESPACE_NAME}\", \"bucketName\": \"${BUCKET_NAME}\", \"objectName\": \"${OBJECT_NAME}\"    }  }}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://iaas.${REGION}.oraclecloud.com/20180530/instanceAgentCommands/#{COMMAND_ID}"
+        }
+      }
+    }
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 300
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://iaas.${REGION}.oraclecloud.com/20180530/instanceAgentCommands/#{COMMAND_ID}/status?instanceId=${INSTANCE_ID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+          }
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD,'$.id') AS String)",
+      "name": "COMMAND_ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}

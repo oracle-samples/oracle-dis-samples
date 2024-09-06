@@ -1,0 +1,75 @@
+{
+    "modelType": "REST_TASK",
+    "name": "Execute Task",
+    "description": "Execute a task using its task key from the current application and workspace. This is a fire and forget task. The task must be in the same application that this task is deployed into (since the system parameter application key is used). ",
+    "identifier": "EXECUTE_TASK",
+    "parameters": [
+        {
+            "modelType": "PARAMETER",
+            "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+            "configValues": {
+                "configParamValues": {
+                    "length": {
+                        "intValue": 255
+                    },
+                    "usedInParam": {
+                        "stringValue": "Execute API Config: (Request Payload)"
+                    }
+                }
+            },
+            "description": "",
+            "defaultValue": "taskKey",
+            "isInput": true,
+            "isOutput": false,
+            "name": "TASK_KEY",
+            "typeName": "VARCHAR"
+        }
+    ],
+    "opConfigValues": {
+        "configParamValues": {
+            "successCondition": {
+                "refValue": {
+                    "modelType": "EXPRESSION",
+                    "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+                }
+            }
+        }
+    },
+    "isConcurrentAllowed": true,
+    "executeRestCallConfig": {
+        "modelType": "REST_CALL_CONFIG",
+        "methodType": "POST",
+        "requestHeaders": {
+            "Content-Type": "application/json"
+        },
+        "configValues": {
+            "configParamValues": {
+                "requestURL": {
+                    "stringValue": "https://dataintegration.${SYS.REGION}.oci.oraclecloud.com/20200430/workspaces/${SYS.WORKSPACE_ID}/applications/${SYS.APPLICATION_KEY}/taskRuns"
+                },
+                "requestPayload": {
+                    "refValue": {
+                        "modelType": "JSON_TEXT",
+                        "encoded": false,
+                        "configValues": {
+                            "configParamValues": {
+                                "dataParam": {
+                                    "stringValue": "{\n  \"registryMetadata\": {\n    \"aggregatorKey\": \"${TASK_KEY}\"\n  }\n}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "apiCallMode": "SYNCHRONOUS",
+    "authConfig": {
+        "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+        "resourcePrincipalSource": "WORKSPACE"
+    },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }         
+
+}

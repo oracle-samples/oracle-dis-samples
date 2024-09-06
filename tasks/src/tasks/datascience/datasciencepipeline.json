@@ -1,0 +1,226 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Execute Data Science Pipeline",
+  "description": "Run a pipeline job in OCI Data Science. See https://docs.oracle.com/en-us/iaas/api/#/en/data-science/20190101/PipelineRun/CreatePipelineRun",
+  "identifier": "EXECUTE_DATA_SCIENCE_PIPELINE",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "OCI Region name.",
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Compartment to create container instance in.",
+      "defaultValue": "compartment_id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Environment variables, specified as VAR:VAL, ...",
+      "defaultValue": " ",
+      "isInput": true,
+      "isOutput": false,
+      "name": "ENVIRONMENT_VARS",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Project id for Data Science pipeline.",
+      "defaultValue": "project_id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "PROJECT_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Pipeline id to run in Data Science.",
+      "defaultValue": "pipeline_id",
+      "isInput": true,
+      "isOutput": false,
+      "name": "PIPELINE_ID",
+      "typeName": "VARCHAR"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "description": "Display name for pipeline run.",
+      "defaultValue": "pipeline_run_job_name",
+      "isInput": true,
+      "isOutput": false,
+      "name": "DISPLAY_NAME",
+      "typeName": "VARCHAR"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+          }
+        }
+      }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "configValues": {
+      "configParamValues": {
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\n  \"projectId\": \"${PROJECT_ID}\",\n  \"configurationOverrideDetails\": {\n    \"environmentVariables\": {\n\t\t\t${ENVIRONMENT_VARS}\n    },\n    \"type\": \"DEFAULT\"\n  },\n  \"pipelineId\": \"${PIPELINE_ID}\",\n  \"compartmentId\": \"${COMPARTMENT_ID}\",\n  \"displayName\": \"${DISPLAY_NAME}\",\n  \"freeformTags\": {},\n  \"definedTags\": {},\n  \"logConfigurationOverrideDetails\": null,\n  \"stepOverrideDetails\": []\n}\n"
+                }
+              }
+            }
+          }
+        },
+        "requestURL": {
+          "stringValue": "https://datascience.${REGION}.oci.oraclecloud.com/20190101/pipelineRuns"
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://datascience.${REGION}.oci.oraclecloud.com/20190101/pipelineRuns/#{ID}"
+        }
+      }
+    }
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 1000
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "https://datascience.${REGION}.oci.oraclecloud.com/20190101/pipelineRuns/#{ID}"
+        },
+        "pollCondition": {
+          "refValue": {
+            "modelType": "EXPRESSION",
+            "exprString": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'"
+            }
+          }
+        }
+      }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.id') AS String)",
+      "name": "ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+        "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}
+

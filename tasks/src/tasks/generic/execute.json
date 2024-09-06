@@ -1,0 +1,108 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Execute OCI POST API",
+  "description": "Execute a POST REST API.",
+  "identifier": "EXECUTE_OCI_POST_API",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "key": "04e2825d-8acb-4f5e-9b61-177a5c0ae1e5",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "http://abc",
+      "isInput": true,
+      "isOutput": false,
+      "name": "URL",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "70c8b5f0-8b9f-4177-ad86-517a40b0de81",
+      "type": {
+        "modelType": "JAVA_TYPE",
+        "key": "04ee8b27-10e4-4493-8dda-9bf47aac9d47",
+        "parentRef": {
+          "parent": "70c8b5f0-8b9f-4177-ad86-517a40b0de81"
+        },
+        "javaTypeName": "com.oracle.dicom.model.dataformat.JsonText"
+      },
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload), Execute API Config: (Request Payload)"
+          }
+        },
+        "parentRef": {
+          "parent": "70c8b5f0-8b9f-4177-ad86-517a40b0de81"
+        }
+      },
+      "description": "POST API Request Body",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REQUEST_BODY",
+      "rootObjectDefaultValue": {
+        "modelType": "JSON_TEXT",
+        "key": "442774d0-040e-4466-a282-a200e5269ec0",
+        "parentRef": {
+          "parent": "70c8b5f0-8b9f-4177-ad86-517a40b0de81"
+        },
+        "encoded": false,
+        "configValues": {
+          "configParamValues": {
+            "dataParam": {
+              "stringValue": "{}"
+            }
+          }
+        }
+      },
+      "typeName": "com.oracle.dicom.model.dataformat.JsonText"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "refValue": {
+          "modelType": "EXPRESSION",
+          "key": "c774bac7-4465-4953-a501-2cb8578aae62",
+          "exprString": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300"
+        }
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "key": "cedde191-61fb-4bc2-9e47-c2c541233dd5",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "${URL}"
+        },
+        "requestPayload": {
+          "parameterValue": "70c8b5f0-8b9f-4177-ad86-517a40b0de81"
+        }
+      }
+    }
+  },
+  "apiCallMode": "SYNCHRONOUS",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }     
+}

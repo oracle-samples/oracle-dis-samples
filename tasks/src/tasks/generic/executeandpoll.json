@@ -1,0 +1,219 @@
+{
+  "modelType": "REST_TASK",
+  "name": "Execute OCI POST API and Poll",
+  "description": "Execute a POST REST API. This fits a very specific OCI pattern for REST calls. One thing to note, is that the attribute used in the poll is hard-wired right now as the attribute id in the response.",
+  "identifier": "EXECUTE_OCI_POST_API_AND_POLL",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "key": "e8ff9732-2a50-4dc8-8669-e21550d809e5",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "https://abc",
+      "isInput": true,
+      "isOutput": false,
+      "name": "URL",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "14154173-021f-4f6b-92f8-0757e8543a45",
+      "type": {
+        "modelType": "JAVA_TYPE",
+        "key": "b5939c37-86a7-4687-b231-9512aa6eed70",
+        "parentRef": {
+          "parent": "14154173-021f-4f6b-92f8-0757e8543a45"
+        },
+        "javaTypeName": "com.oracle.dicom.model.dataformat.JsonText"
+      },
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        },
+        "parentRef": {
+          "parent": "14154173-021f-4f6b-92f8-0757e8543a45"
+        }
+      },
+      "description": "POST API Request Body",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REQUEST_BODY",
+      "rootObjectDefaultValue": {
+        "modelType": "JSON_TEXT",
+        "key": "7010a758-e1e6-4ee4-b081-75744069bc2a",
+        "parentRef": {
+          "parent": "14154173-021f-4f6b-92f8-0757e8543a45"
+        },
+        "encoded": false,
+        "configValues": {
+          "configParamValues": {
+            "dataParam": {
+              "stringValue": "{}"
+            }
+          }
+        }
+      },
+      "typeName": "com.oracle.dicom.model.dataformat.JsonText"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "60c01c60-d9c2-4ba5-92d8-4560b12812e9",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 255
+          },
+          "usedInParam": {
+            "stringValue": "Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "description": "",
+      "defaultValue": "https://abc",
+      "isInput": true,
+      "isOutput": false,
+      "name": "POLL_URL",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "e9000971-ce45-4423-874f-719293fe41c4",
+      "type": {
+        "modelType": "JAVA_TYPE",
+        "key": "9e655dc1-8525-4e50-8ed0-2db75681e473",
+        "parentRef": {
+          "parent": "e9000971-ce45-4423-874f-719293fe41c4"
+        },
+        "javaTypeName": "com.oracle.dicom.model.expression.Expression"
+      },
+      "configValues": {
+        "configParamValues": {
+          "usedInParam": {
+            "stringValue": "Success Condition"
+          }
+        },
+        "parentRef": {
+          "parent": "e9000971-ce45-4423-874f-719293fe41c4"
+        }
+      },
+      "description": "",
+      "defaultValue": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS < 300",
+      "isInput": true,
+      "isOutput": false,
+      "name": "SUCCESS_CONDITION",
+      "typeName": "com.oracle.dicom.model.expression.Expression"
+    },
+    {
+      "modelType": "PARAMETER",
+      "key": "5088c60a-f85c-4741-94e5-5edf8bb4f9a5",
+      "type": {
+        "modelType": "JAVA_TYPE",
+        "key": "9e655dc1-8525-4e50-8ed0-2db75681e473",
+        "parentRef": {
+          "parent": "e9000971-ce45-4423-874f-719293fe41c4"
+        },
+        "javaTypeName": "com.oracle.dicom.model.expression.Expression"
+      },
+      "description": "",
+      "defaultValue": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED' AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'FAILED'",
+      "isInput": true,
+      "isOutput": false,
+      "name": "POLL_CONDITION",
+      "typeName": "com.oracle.dicom.model.expression.Expression"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "parameterValue": "e9000971-ce45-4423-874f-719293fe41c4"
+      }
+    },
+    "parentRef": {}
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "key": "7b2af7c3-ca47-4724-ae6c-a20cf978d70f",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "${URL}"
+        },
+        "requestPayload": {
+          "parameterValue": "14154173-021f-4f6b-92f8-0757e8543a45"
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "DELETE"
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "key": "3aa07d65-0ace-43ff-a59a-56e7bf0055fa",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollMaxDuration": {
+          "objectValue": 120
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        },
+        "requestURL": {
+          "stringValue": "${POLL_URL}"
+        },
+        "pollCondition": {
+          "parameterValue": "5088c60a-f85c-4741-94e5-5edf8bb4f9a5"
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "key": "58565f8f-871a-4e75-ba69-ca1b30a9cfd6",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 2000
+          }
+        }
+      },
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.id') AS String)\t",
+      "name": "ID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }     
+}

@@ -1,0 +1,252 @@
+{
+  "modelType": "REST_TASK",
+  "name": "AI Image Object Detection Task",
+  "identifier": "AIIMAGEOBJECTDETECTIONTASK",
+  "parameters": [
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request URL),Termination API Config: (Request URL),Polling API Config: (Request URL)"
+          }
+        }
+      },
+      "defaultValue": "us-ashburn-1",
+      "isInput": true,
+      "isOutput": false,
+      "name": "REGION",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "namespacename",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_NAMESPACE",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "templatedemo",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_BUCKET",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "visionout",
+      "isInput": true,
+      "isOutput": false,
+      "name": "OUTPUT_PREFIX",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "compartmentid",
+      "isInput": true,
+      "isOutput": false,
+      "name": "COMPARTMENT",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "ObjectDetection",
+      "isInput": true,
+      "isOutput": false,
+      "name": "JOB_NAME",
+      "typeName": "STRING"
+    },
+    {
+      "modelType": "PARAMETER",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/STRING",
+      "configValues": {
+        "configParamValues": {
+          "length": {
+            "intValue": 4000
+          },
+          "scale": {
+            "intValue": 0
+          },
+          "usedInParam": {
+            "stringValue": "Execute API Config: (Request Payload)"
+          }
+        }
+      },
+      "defaultValue": "[ { \"bucketName\": \"a_delta_archive\", \"namespaceName\": \"namespacename\", \"objectName\": \"powerlines.png\" } ]",
+      "isInput": true,
+      "isOutput": false,
+      "name": "INPUT_DATA",
+      "typeName": "STRING"
+    }
+  ],
+  "opConfigValues": {
+    "configParamValues": {
+      "successCondition": {
+        "stringValue": "SYS.RESPONSE_STATUS >= 200 AND SYS.RESPONSE_STATUS <= 300 AND CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) == 'SUCCEEDED'"
+      }
+    }
+  },
+  "executeRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "requestHeaders": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "configValues": {
+      "configParamValues": {
+        "requestPayload": {
+          "refValue": {
+            "modelType": "JSON_TEXT",
+            "encoded": false,
+            "configValues": {
+              "configParamValues": {
+                "dataParam": {
+                  "stringValue": "{\"features\":[{\"featureType\":\"OBJECT_DETECTION\", \"maxResult\":50}], \"inputLocation\": { \"sourceType\": \"OBJECT_LIST_INLINE_INPUT_LOCATION\", \"objectLocations\": ${INPUT_DATA} }, \"outputLocation\": { \"bucketName\": \"${OUTPUT_BUCKET}\", \"namespaceName\": \"${OUTPUT_NAMESPACE}\", \"prefix\": \"${OUTPUT_PREFIX}\" }, \"compartmentId\": \"${COMPARTMENT}\", \"displayName\": \"${JOB_NAME}\", \"isZipOutputEnabled\": false }"
+                }
+              }
+            }
+          }
+        },
+        "requestURL": {
+          "stringValue": "https://vision.aiservice.${REGION}.oci.oraclecloud.com/20220125/imageJobs"
+        }
+      }
+    }
+  },
+  "cancelRestCallConfig": {
+    "modelType": "REST_CALL_CONFIG",
+    "methodType": "POST",
+    "configValues": {
+      "configParamValues": {
+        "requestURL": {
+          "stringValue": "https://vision.aiservice.${REGION}.oci.oraclecloud.com/20220125/imageJobs/#{IMAGE_JOB_OCID}/actions/cancel"
+        }
+      }
+    }
+  },
+  "pollRestCallConfig": {
+    "modelType": "POLL_REST_CALL_CONFIG",
+    "methodType": "GET",
+    "configValues": {
+      "configParamValues": {
+        "pollCondition": {
+          "stringValue": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.lifecycleState') AS String) != 'SUCCEEDED'"
+        },
+        "pollInterval": {
+          "objectValue": 60
+        },
+        "requestURL": {
+          "stringValue": "https://vision.aiservice.${REGION}.oci.oraclecloud.com/20220125/imageJobs/#{IMAGE_JOB_OCID}"
+        },
+        "pollMaxDuration": {
+          "objectValue": 120
+        },
+        "pollMaxDurationUnit": {
+          "stringValue": "SECONDS"
+        },
+        "pollIntervalUnit": {
+          "stringValue": "SECONDS"
+        }
+      }
+    }
+  },
+  "typedExpressions": [
+    {
+      "modelType": "TYPED_EXPRESSION",
+      "type": "Seeded:/typeSystems/PLATFORM/dataTypes/VARCHAR",
+      "expression": "CAST(json_path(SYS.RESPONSE_PAYLOAD, '$.id') AS String)",
+      "name": "IMAGE_JOB_OCID"
+    }
+  ],
+  "apiCallMode": "ASYNC_GENERIC",
+  "authDetails": {
+    "modelType": "RESOURCE_PRINCIPAL_AUTH_DETAILS"
+  },
+  "authConfig": {
+    "modelType": "OCI_RESOURCE_AUTH_CONFIG",
+    "resourcePrincipalSource": "WORKSPACE"
+  },
+  "registryMetadata": {
+    "aggregatorKey": "{{PROJECT_KEY}}"
+  }
+}
